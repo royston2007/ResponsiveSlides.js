@@ -30,7 +30,7 @@
       "before": $.noop,                 // Function: Before callback
       "after": $.noop,                  // Function: After callback
       "pauseResume": false,             // Boolean: Show pause-resume, true or false
-      "pauseResumeInitialText": "Play", // String: Text for the "pause-resume" button when the sldier is NOT set to "auto" start
+      "pauseResumeInitialText": "Play", // String: Text for the "pause-resume" button when the sldier is NOT set to "play" on page load
       "resumeText": "Resume",           // String: Text for the "pause-resume" button when the slider is playing
       "pauseText": "Pause"              // String: Text for the "pause-resume" button when the slider is paused
     }, options);
@@ -49,7 +49,6 @@
         restartCycle,
         rotate,
         $tabs,
-        isPaused = true,
 
         // Helpers
         index = 0,
@@ -72,7 +71,7 @@
         // Pager
         $pager = $("<ul class='" + namespace + "_tabs " + namespaceIdx + "_tabs' />"),
         
-        // Play Pause
+        // Pause Resume
         $pauseResume = $("<ul class='" + namespace + "_pauseResume " + namespaceIdx + "_pauseResume' />"),
 
         // Styles for visible and hidden slides
@@ -213,13 +212,14 @@
             $pauseResume.append("<li><a href='#' class='PauseResume'>" + settings.pauseResumeInitialText + "</a></li>");
           }
           
-          // Inject play and pause buttons
+          // Inject pause-resume button
           if (options.navContainer) {
             $(settings.navContainer).append($pauseResume);
           } else {
             $this.after($pauseResume);
           }
           
+          // Toggle "play"
           $pauseResume.find("a").bind("click", function(e) {
             e.preventDefault();
             settings.play = (!settings.play);
@@ -265,6 +265,7 @@
           };
         }
         
+        // Animate slider
         startCycle = function () {
           rotate = setInterval(function () {
             // Clear the event queue
@@ -421,8 +422,6 @@
           widthSupport();
         });
       }
-
     });
-
   };
 })(jQuery, this, 0);
